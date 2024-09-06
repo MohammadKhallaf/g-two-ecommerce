@@ -36,3 +36,9 @@ export const ComponentName = ()=>{
 }
 import {ComponentName} from './path'
 ```
+
+# Router implementation
+1- install `npm i react-router-dom`
+2- wrap with Provider `<BrowserRouter/>`
+3- Wrap within `<Routes></Routes> `
+4- use `<Route path element /> ` to define the route 
