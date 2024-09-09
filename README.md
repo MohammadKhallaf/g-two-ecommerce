@@ -91,3 +91,15 @@ guest -> (JS) -> |<>->[]| local storage **(persist)**
 - mutation in react
 
 
+## Today task
+1- issue at the counter of the product qty []
+2- add wishlist ( same functionality of the cart )
+3- implement remove from cart
+4- implement remove from wishlist 
+
+--------------------------------------------------------|
+
+## Bonus
+-> preserve the state (using local storage)
+-> update qty from within the cart 
+-> prevent adding the product more than one time to the wishlist
