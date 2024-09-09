@@ -19,11 +19,13 @@ const productList = [
     description: "Product 2 description",
   },
   {
+    
     id: 3,
     name: "Product 3",
     price: 3000,
     image: "https://placehold.co/600x400",
     description: "Product 3 description",
+  
   },
   {
     id: 4,

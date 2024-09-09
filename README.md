@@ -32,6 +32,7 @@ export default ComponentName;
 ```
 ```jsx
 export const ComponentName = ()=>{
+
   return()
 }
 import {ComponentName} from './path'
@@ -42,3 +43,51 @@ import {ComponentName} from './path'
 2- wrap with Provider `<BrowserRouter/>`
 3- Wrap within `<Routes></Routes> `
 4- use `<Route path element /> ` to define the route 
+
+# imports states...
+import ProductCard from **"../components/ProductCard"**
+
+3 type  :
+- **"react-bootstrap/Col"** : import from library
+- **"./pages/ProductList"** --> **'./'** -> relative path
+- **"../components/ProductCard"** -> **'../'** -> relative path
+
+access the current folder `.`
+up one level up | `..`
+
+
+src:
+- components folder
+  - ProductCard.jsx
+- pages folder
+  - ProductList.jsx 
+- App.js
+- index.js
+
+
+--- 
+
+# 9 Sept.
+- cart page
+  - navigation to card
+  - Bootstrap -> as={External Library}
+- add products to the cart page
+- refines
+
+## 1. create cart page
+1. create a file 
+2. create a function inside the file and name it to the component name
+   Start with Upper Case
+3. export 
+4. import @ file I want to use the component in
+
+## 2. add products to the cart page
+guest -> (JS) -> |<>->[]| local storage **(persist)**
+
+
+
+## Today research
+- reconciliation in react
+- mutation in react
+
+
