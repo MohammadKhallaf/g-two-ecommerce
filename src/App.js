@@ -5,12 +5,13 @@ import CartPage from "./pages/CartPage";
 import "./App.css";
 import { useState } from "react";
 import { CartContext } from "./CartContext";
+import WishListPage from "./pages/WishListPage";
 
 /** #### OLD CODE ISSUE:
  * In Development Mode React runs in Strict Mode, hence it will render twice, since setCart() used in addToCart() was not a pure
  * function, because it was not returning a new array but changing the original array that caused the double increment of qty with
  * only one click.
- * 
+ *
  * A pure function should always return the same output for the same input.
  *
  * - [StrictMode](https://react.dev/reference/react/StrictMode)
@@ -25,6 +26,7 @@ import { CartContext } from "./CartContext";
  */
 function App() {
   const [cart, setCart] = useState([]);
+  const [wishList, setWishList] = useState({});
   const addToCart = (product) => {
     // prevState === cart state (on the exact previous render)
     setCart((prevState) => {
@@ -55,8 +57,21 @@ function App() {
     });
   };
 
+  const toggleWish = (product) => {
+    setWishList((prevState) => {
+      const inWishList = prevState[product.id];
+      if (inWishList) {
+        const newState = { ...prevState };
+        delete newState[product.id];
+        return newState;
+      } else {
+        return { ...prevState, [product.id]: product };
+      }
+    });
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, wishList, toggleWish }}>
       <BrowserRouter>
         <div>
           <CustomNavbar />
@@ -64,6 +79,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ProductList />} />
             <Route path="cart" element={<CartPage />} />
+            <Route path="wishlist" element={<WishListPage />} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { CartContext } from "../CartContext";
 
 function CustomNavbar() {
-  const { cart, addToCart } = useContext(CartContext);
+  const { cart, wishList } = useContext(CartContext);
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
@@ -16,8 +16,8 @@ function CustomNavbar() {
         </Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">
-            Wishlist <Badge bg="danger">9</Badge>
+          <Nav.Link as={Link} to="wishlist">
+            Wishlist <Badge bg="danger">{Object.keys(wishList).length}</Badge>
           </Nav.Link>
           <Nav.Link as={Link} to="cart">
             Cart{" "}
