@@ -6,6 +6,23 @@ import "./App.css";
 import { useState } from "react";
 import { CartContext } from "./CartContext";
 
+/** #### OLD CODE ISSUE:
+ * In Development Mode React runs in Strict Mode, hence it will render twice, since setCart() used in addToCart() was not a pure
+ * function, because it was not returning a new array but changing the original array that caused the double increment of qty with
+ * only one click.
+ * 
+ * A pure function should always return the same output for the same input.
+ *
+ * - [StrictMode](https://react.dev/reference/react/StrictMode)
+ * - [React Keeping Components Pure](https://react.dev/learn/keeping-components-pure)
+ *
+ * #### old code:
+ * ```js
+ * const currentProduct = prevState[idx];
+ * currentProduct.qty += 1;
+ * return [...prevState];
+ * ```
+ */
 function App() {
   const [cart, setCart] = useState([]);
   const addToCart = (product) => {
@@ -24,10 +41,13 @@ function App() {
       const idx = prevState.findIndex((item) => item.id === product.id);
       if (idx > -1) {
         // if exists
-        const currentProduct = prevState[idx];
-        currentProduct.qty += 1;
-
-        return [...prevState];
+        const newState = prevState.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, qty: item.qty + 1 };
+          }
+          return item;
+        });
+        return newState;
       } else {
         const newProduct = { ...product, qty: 1 };
         return [...prevState, newProduct];
