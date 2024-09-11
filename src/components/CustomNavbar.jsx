@@ -15,14 +15,14 @@ function CustomNavbar() {
           Ecommerce
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
           <Nav.Link as={Link} to="wishlist">
             Wishlist <Badge bg="danger">{Object.keys(wishList).length}</Badge>
           </Nav.Link>
           <Nav.Link as={Link} to="cart">
             Cart{" "}
             <Badge bg="warning" text="dark">
-              {cart.length}
+              {cart.reduce((a, b) => a + b.qty, 0)}
             </Badge>
           </Nav.Link>
         </Nav>

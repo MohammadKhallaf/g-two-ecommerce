@@ -57,6 +57,17 @@ function App() {
     });
   };
 
+  const removeFromCart = (product) => {
+    setCart((prevState) => {
+      const idx = prevState.findIndex((item) => item.id === product.id);
+      if (idx > -1) {
+        return prevState.filter((item) => item.id !== product.id);
+      } else {
+        return prevState;
+      }
+    });
+  };
+
   const toggleWish = (product) => {
     setWishList((prevState) => {
       const inWishList = prevState[product.id];
@@ -71,7 +82,7 @@ function App() {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, wishList, toggleWish }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, wishList, toggleWish }}>
       <BrowserRouter>
         <div>
           <CustomNavbar />
