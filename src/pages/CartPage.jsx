@@ -3,14 +3,24 @@ import Stack from "react-bootstrap/Stack";
 import Card from "react-bootstrap/Card";
 import { useContext } from "react";
 import { CartContext } from "../CartContext";
-import { Button } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
 // 1. create file js or jsx
 // 2. function ComponentName
 // 3. return <></>
 // 4. export
 function CartPage() {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cart, removeFromCart, updateCartQty } = useContext(CartContext);
+
+  const validateQty = (e, product) => {
+    if (e.target.value < 1) {
+      updateCartQty(product, 1);
+    }
+
+    if (e.target.value > 99) {
+      updateCartQty(product, 99);
+    }
+  };
 
   if (cart.length === 0) {
     return (
@@ -22,7 +32,7 @@ function CartPage() {
 
   // cart => map
   return (
-    <Container className="my-5">
+    <Container className="my-5" style={{ maxWidth: "800px" }}>
       {" "}
       <Stack gap={3}>
         {cart.map(function (product, arg2, arg3) {
@@ -35,8 +45,37 @@ function CartPage() {
           return (
             <Card key={arg2}>
               <Card.Body>
-                <div className="d-flex justify-content-between align-items-center gap-5">
-                  {product.name} x{product.qty}
+                <div className="d-flex justify-content-between align-items-center gap-2 flex-wrap">
+                  {product.name}
+                  <div>
+                    <InputGroup>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() => updateCartQty(product, product.qty - 1)}
+                        disabled={product.qty < 2}
+                      >
+                        -
+                      </Button>
+                      <Form.Control
+                        type="number"
+                        value={product.qty}
+                        onChange={(e) =>
+                          updateCartQty(product, Number(e.target.value))
+                        }
+                        min={1}
+                        max={99}
+                        onBlur={(e) => validateQty(e, product)}
+                        style={{ textAlign: "center", maxWidth: 60 }}
+                      />
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() => updateCartQty(product, product.qty + 1)}
+                        disabled={product.qty > 98}
+                      >
+                        +
+                      </Button>
+                    </InputGroup>
+                  </div>
                   <Button
                     variant="danger"
                     onClick={() => removeFromCart(product)}

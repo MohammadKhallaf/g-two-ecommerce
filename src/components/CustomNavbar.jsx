@@ -9,7 +9,7 @@ import { CartContext } from "../CartContext";
 function CustomNavbar() {
   const { cart, wishList } = useContext(CartContext);
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
+    <Navbar bg="dark" data-bs-theme="dark" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to="/">
           Ecommerce

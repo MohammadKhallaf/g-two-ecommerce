@@ -57,6 +57,24 @@ function App() {
     });
   };
 
+  const updateCartQty = (product, qty) => {
+    if (qty < 1) return;
+    setCart((prevState) => {
+      const idx = prevState.findIndex((item) => item.id === product.id);
+      if (idx > -1) {
+        const newState = prevState.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, qty };
+          }
+          return item;
+        });
+        return newState;
+      } else {
+        return prevState;
+      }
+    });
+  };
+
   const removeFromCart = (product) => {
     setCart((prevState) => {
       const idx = prevState.findIndex((item) => item.id === product.id);
@@ -82,7 +100,7 @@ function App() {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, wishList, toggleWish }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, wishList, toggleWish, updateCartQty }}>
       <BrowserRouter>
         <div>
           <CustomNavbar />

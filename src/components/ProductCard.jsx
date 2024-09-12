@@ -6,7 +6,7 @@ import { CartContext } from "../CartContext";
 function ProductCard({ product }) {
   const { addToCart, wishList, toggleWish } = useContext(CartContext);
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card className="mx-auto" style={{ width: "18rem" }}>
       <Card.Img variant="top" src="https://placehold.co/600x400" />
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>
@@ -40,7 +40,7 @@ function ProductCard({ product }) {
             </svg>
           </Button>
           <Button
-            variant={wishList[product.id] ? "danger" : "secondary"}
+            variant={wishList[product.id] ? "danger" : "outline-secondary"}
             onClick={() => toggleWish(product)}
           >
             <svg
