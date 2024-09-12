@@ -3,7 +3,7 @@ import CustomNavbar from "./components/CustomNavbar";
 import ProductList from "./pages/ProductList";
 import CartPage from "./pages/CartPage";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 import WishListPage from "./pages/WishListPage";
 
@@ -27,6 +27,33 @@ import WishListPage from "./pages/WishListPage";
 function App() {
   const [cart, setCart] = useState([]);
   const [wishList, setWishList] = useState({});
+  const [firstRender, setFirstRender] = useState(true);
+
+  /** Synchronizing with Local Storage */
+  useEffect(() => {
+    function setDataFromLocalStorage() {
+      const cartFromLocalStorage = localStorage.getItem("cart");
+      const wishListFromLocalStorage = localStorage.getItem("wishList");
+      if (cartFromLocalStorage) {
+        setCart(JSON.parse(cartFromLocalStorage));
+      }
+      if (wishListFromLocalStorage) {
+        setWishList(JSON.parse(wishListFromLocalStorage));
+      }
+      setFirstRender(false);
+    }
+    if (firstRender) {
+      setDataFromLocalStorage();
+    } else {
+      updateLocalStorage("cart", cart);
+      updateLocalStorage("wishList", wishList);
+    }
+  }, [cart, wishList, firstRender]);
+
+  const updateLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+
   const addToCart = (product) => {
     // prevState === cart state (on the exact previous render)
     setCart((prevState) => {
@@ -100,7 +127,16 @@ function App() {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, wishList, toggleWish, updateCartQty }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        wishList,
+        toggleWish,
+        updateCartQty,
+      }}
+    >
       <BrowserRouter>
         <div>
           <CustomNavbar />
