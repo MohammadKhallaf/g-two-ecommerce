@@ -35,6 +35,17 @@ function CartPage() {
     <Container className="my-5" style={{ maxWidth: "800px" }}>
       {" "}
       <Stack gap={3}>
+        <Card className="border-0">
+          <Card.Body>
+            <div className="d-flex justify-content-between align-items-center fw-bold">
+              <div>Name</div>
+              <div>Price</div>
+              <div>Quantity</div>
+              <div>Total</div>
+              <div>Remove</div>
+            </div>
+          </Card.Body>
+        </Card>
         {cart.map(function (product, arg2, arg3) {
           // current item -> arg / item / product / ahmed <- 1st arg
           // index in the array -> door / idx / index / mahmoud <- 2nd arg
@@ -47,6 +58,7 @@ function CartPage() {
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center gap-2 flex-wrap">
                   {product.name}
+                  <div>${product.price}</div>
                   <div>
                     <InputGroup>
                       <Button
@@ -76,6 +88,7 @@ function CartPage() {
                       </Button>
                     </InputGroup>
                   </div>
+                  <div>${product.qty * product.price}</div>
                   <Button
                     variant="danger"
                     onClick={() => removeFromCart(product)}
@@ -105,6 +118,9 @@ function CartPage() {
           );
         })}
       </Stack>
+      <h1 className="text-end mt-5">
+        Sub Total: ${cart.reduce((a, b) => a + b.price, 0)}
+      </h1>
     </Container>
   );
 }
