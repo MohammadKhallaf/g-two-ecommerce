@@ -103,3 +103,57 @@ guest -> (JS) -> |<>->[]| local storage **(persist)**
 -> preserve the state (using local storage)
 -> update qty from within the cart 
 -> prevent adding the product more than one time to the wishlist
+
+
+
+
+------ 13 sept. ---------
+## useEffect ( ()=>{}  ,[] )
+```jsx
+  useEffect(() => {
+
+  }, []); // initial render
+```
+```jsx
+  useEffect(() => {
+
+  }); // on every render
+```
+```jsx
+  useEffect(() => {
+
+return ()=>{ // when component exist
+
+}
+  }, []); 
+```
+```jsx
+  useEffect(() => {
+
+
+  }, [cart]);  // [state] -> depend on state change
+```
+
+
+## Optimization 
+- useMemo -> return value
+- useCallback -> function
+
+## Task 
+-  hide the navbar if the **user** is not exist and current route is **"login"** -> documentation -> **useLocation** --> Protected routes
+-  useMemo and useCallback++ in all calculation
+- Bonus -> login (save user name only)
+
+
+## Project
+- reciepes
+- Cars
+- Book store
+- Tracking airplanes
+- CMS -> content management sys.
+- Admin -> CRUD & Roles (admin -> full access | view only | update prices)
+- Trip planner -> 
+- E learning -> cart -> udemy
+- TaskFlow -> trello like -> roles
+  - admin -> assign tasks
+  - employee -> update | finish | in progress

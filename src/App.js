@@ -3,11 +3,15 @@ import CustomNavbar from "./components/CustomNavbar";
 import ProductList from "./pages/ProductList";
 import CartPage from "./pages/CartPage";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+
+  const [user, setUser] = useState("ahmed");
+
   const addToCart = (product) => {
     // prevState === cart state (on the exact previous render)
     setCart((prevState) => {
@@ -27,16 +31,89 @@ function App() {
         const currentProduct = prevState[idx];
         currentProduct.qty += 1;
 
+        // local storage save data in string format only
+        // JSON
+        // data -> string
+        const convertedArr = JSON.stringify([...prevState]);
+        localStorage.setItem("cart", convertedArr);
         return [...prevState];
       } else {
         const newProduct = { ...product, qty: 1 };
+
+        const convertedArr = JSON.stringify([...prevState, newProduct]);
+        localStorage.setItem("cart", convertedArr);
         return [...prevState, newProduct];
       }
     });
   };
 
+  const removeFromCart = (product) => {
+    setCart((prevArray) => {
+      const newArray = prevArray.filter((item) => {
+        return item.id !== product.id;
+      });
+
+      const convertedArr = JSON.stringify(newArray);
+      localStorage.setItem("cart", convertedArr);
+      return newArray;
+    });
+  };
+
+  // wishlist code
+  const addToWishlist = (product) => {
+    // prevState === cart state (on the exact previous render)
+    setWishlist((prevState) => {
+      const idx = prevState.findIndex((item) => item.id === product.id);
+      if (idx > -1) {
+        const convertedArr = JSON.stringify([...prevState]);
+        localStorage.setItem("wishlist", convertedArr);
+        return [...prevState];
+      } else {
+        const convertedArr = JSON.stringify([...prevState, product]);
+        localStorage.setItem("wishlist", convertedArr);
+        return [...prevState, product];
+      }
+    });
+  };
+  const removeFromWishlist = (product) => {
+    setWishlist((prevArray) => {
+      const newArray = prevArray.filter((item) => {
+        return item.id !== product.id;
+      });
+
+      const convertedArr = JSON.stringify(newArray);
+      localStorage.setItem("wishlist", convertedArr);
+      return newArray;
+    });
+  };
+
+  // initial render
+  useEffect(() => {
+    // read from local storage
+    const cartData = localStorage.getItem("cart");
+    if (cartData) {
+      const invertedCart = JSON.parse(cartData);
+      setCart(invertedCart);
+    }
+    // read from local storage
+    const wishlistData = localStorage.getItem("wishlist");
+    if (wishlistData) {
+      const invertedWishlist = JSON.parse(wishlistData);
+      setWishlist(invertedWishlist);
+    }
+  }, []);
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        wishlist,
+        addToWishlist,
+        removeFromWishlist,
+      }}
+    >
       <BrowserRouter>
         <div>
           <CustomNavbar />
