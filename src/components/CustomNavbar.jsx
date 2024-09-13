@@ -22,7 +22,7 @@ function CustomNavbar() {
           <Nav.Link as={Link} to="cart">
             Cart{" "}
             <Badge bg="warning" text="dark">
-              {cart.reduce((a, b) => a + b.qty, 0)}
+              {cart.length > 99 ? "99+" : cart.length}
             </Badge>
           </Nav.Link>
         </Nav>
