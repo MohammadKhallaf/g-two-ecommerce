@@ -142,9 +142,9 @@ function App() {
           <CustomNavbar />
 
           <Routes>
-            <Route path="/" element={<ProductList />} />
             <Route path="cart" element={<CartPage />} />
             <Route path="wishlist" element={<WishListPage />} />
+            <Route path="/" element={<ProductList />} />
           </Routes>
         </div>
       </BrowserRouter>

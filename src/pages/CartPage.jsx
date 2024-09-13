@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
 import Card from "react-bootstrap/Card";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { CartContext } from "../CartContext";
 import { Button, Form, InputGroup } from "react-bootstrap";
 
@@ -11,6 +11,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 // 4. export
 function CartPage() {
   const { cart, removeFromCart, updateCartQty } = useContext(CartContext);
+  const subtotal = useMemo(() => cart.reduce((a, b) => a + (b.price * b.qty), 0), [cart]);
 
   const validateQty = (e, product) => {
     if (e.target.value < 1) {
@@ -118,9 +119,7 @@ function CartPage() {
           );
         })}
       </Stack>
-      <h1 className="text-end mt-5">
-        Sub Total: ${cart.reduce((a, b) => a + b.price, 0)}
-      </h1>
+      <h1 className="text-end mt-5">Sub Total: ${subtotal}</h1>
     </Container>
   );
 }
