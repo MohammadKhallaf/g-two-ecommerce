@@ -5,6 +5,9 @@ import Stack from "react-bootstrap/Stack";
 import Card from "react-bootstrap/Card";
 import { useContext, useMemo, useState } from "react";
 import { CartContext } from "../CartContext";
+import { Button } from "react-bootstrap";
+import { useAuth } from "../store/AuthContext";
+import { Link } from "react-router-dom";
 
 const radios = [
   { name: "Cash", value: "1" },
@@ -18,6 +21,7 @@ const radios = [
 // 4. export
 function CartPage() {
   const [radioValue, setRadioValue] = useState("1");
+  const { user, login } = useAuth();
   const { cart, addToCart } = useContext(CartContext);
   // cart => map
 
@@ -27,7 +31,7 @@ function CartPage() {
   }, [cart]); // depend on what ?
 
   return (
-    <Container className="my-5">
+    <Container className="my-5 w-75">
       {" "}
       <Stack gap={3}>
         {cart.map(function (product, arg2, arg3) {
@@ -48,22 +52,31 @@ function CartPage() {
         <b>{total} EGP</b>
       </Stack>{" "}
       <br />
-      <ButtonGroup>
-        {radios.map((radio, idx) => (
-          <ToggleButton
-            key={idx}
-            id={`radio-${idx}`}
-            type="radio"
-            variant={idx % 2 ? "outline-success" : "outline-danger"}
-            name="radio"
-            value={radio.value}
-            checked={radioValue === radio.value}
-            onChange={(e) => setRadioValue(e.currentTarget.value)}
-          >
-            {radio.name}
-          </ToggleButton>
-        ))}
-      </ButtonGroup>
+      <Stack direction="vertical" gap={3}>
+        <ButtonGroup>
+          {radios.map((radio, idx) => (
+            <ToggleButton
+              key={idx}
+              id={`radio-${idx}`}
+              type="radio"
+              variant={idx % 2 ? "outline-success" : "outline-danger"}
+              name="radio"
+              value={radio.value}
+              checked={radioValue === radio.value}
+              onChange={(e) => setRadioValue(e.currentTarget.value)}
+            >
+              {radio.name}
+            </ToggleButton>
+          ))}
+        </ButtonGroup>
+        {user ? (
+          <Button disabled={total === 0}>Checkout</Button>
+        ) : (
+          <Button variant="warning" as={Link} to="/login">
+            Login to proceed
+          </Button>
+        )}
+      </Stack>
     </Container>
   );
 }

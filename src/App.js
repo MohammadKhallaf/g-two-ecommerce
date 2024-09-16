@@ -5,12 +5,13 @@ import CartPage from "./pages/CartPage";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
+import LoginPage from "./pages/LoginPage";
+import AuthProvider from "./store/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-
-  const [user, setUser] = useState("ahmed");
 
   const addToCart = (product) => {
     // prevState === cart state (on the exact previous render)
@@ -104,27 +105,31 @@ function App() {
   }, []);
 
   return (
-    <CartContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        wishlist,
-        addToWishlist,
-        removeFromWishlist,
-      }}
-    >
-      <BrowserRouter>
-        <div>
-          <CustomNavbar />
+    <AuthProvider>
+      <CartContext.Provider
+        value={{
+          cart,
+          addToCart,
+          removeFromCart,
+          wishlist,
+          addToWishlist,
+          removeFromWishlist,
+        }}
+      >
+        <BrowserRouter>
+          <div>
+            <CustomNavbar />
 
-          <Routes>
-            <Route path="/" element={<ProductList />} />
-            <Route path="cart" element={<CartPage />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </CartContext.Provider>
+            <Routes>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="/" element={<ProductList />} />
+            </Routes>
+            <ToastContainer />
+          </div>
+        </BrowserRouter>
+      </CartContext.Provider>
+    </AuthProvider>
   );
 }
 

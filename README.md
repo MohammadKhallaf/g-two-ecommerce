@@ -145,6 +145,20 @@ return ()=>{ // when component exist
 - Bonus -> login (save user name only)
 
 
+
+
+--- 16 sept. ---
+
+## Today
+1. auth flow
+  a. sketching
+  b. ui
+    1. build the component / page
+    2. link to the router
+    3. apply ui logic
+  c. logic & integration
+
+- another hook rule ->  React Hooks must be called in a React function component or a custom React Hook function 
 ## Project
 - reciepes
 - Cars
