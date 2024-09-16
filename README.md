@@ -159,6 +159,8 @@ return ()=>{ // when component exist
   c. logic & integration
 
 - another hook rule ->  React Hooks must be called in a React function component or a custom React Hook function 
+
+
 ## Project
 - reciepes
 - Cars
@@ -171,3 +173,20 @@ return ()=>{ // when component exist
 - TaskFlow -> trello like -> roles
   - admin -> assign tasks
   - employee -> update | finish | in progress
+
+## 
+
+2 | 2
+- UI && Logic
+- 4 / 8 pages
+- 2 -> 2 pages 1,2 UI
+- 2` -> 2 pages 3,4 UI
+--
+- 2 -> pages 3,4 logic
+- 2` -> pages 1,2 logic
+
+
+[1]
+1 -> page UI - logic
+8 / 4 
+2 pages UI -> logic
