@@ -10,6 +10,7 @@ import WishlistProvider from "./store/WishlistContext";
 
 import "./App.css";
 import ProductProvider from "./store/ProductContext";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Routes>
                   <Route path="login" element={<LoginPage />} />
                   <Route path="cart" element={<CartPage />} />
+                  <Route path="products/:id" element={<ProductDetailsPage />} />
                   <Route path="/" element={<ProductList />} />
                 </Routes>
                 <ToastContainer />
