@@ -9,26 +9,29 @@ import CartProvider from "./store/CartContext";
 import WishlistProvider from "./store/WishlistContext";
 
 import "./App.css";
+import ProductProvider from "./store/ProductContext";
 
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
-        <WishlistProvider>
-          <BrowserRouter>
-            <div>
-              <CustomNavbar />
+      <ProductProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <BrowserRouter>
+              <div>
+                <CustomNavbar />
 
-              <Routes>
-                <Route path="login" element={<LoginPage />} />
-                <Route path="cart" element={<CartPage />} />
-                <Route path="/" element={<ProductList />} />
-              </Routes>
-              <ToastContainer />
-            </div>
-          </BrowserRouter>
-        </WishlistProvider>
-      </CartProvider>
+                <Routes>
+                  <Route path="login" element={<LoginPage />} />
+                  <Route path="cart" element={<CartPage />} />
+                  <Route path="/" element={<ProductList />} />
+                </Routes>
+                <ToastContainer />
+              </div>
+            </BrowserRouter>
+          </WishlistProvider>
+        </CartProvider>
+      </ProductProvider>
     </AuthProvider>
   );
 }
