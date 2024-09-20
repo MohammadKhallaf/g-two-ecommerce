@@ -8,6 +8,7 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import { Link } from "react-router-dom";
 import { useAuth } from "../store/AuthContext";
 import { useCart } from "../store/CartContext";
+import { toast } from "react-toastify";
 
 const radios = [
   { name: "Cash", value: "1" },
@@ -22,7 +23,7 @@ const radios = [
 function CartPage() {
   const [radioValue, setRadioValue] = useState("1");
   const { user, login } = useAuth();
-  const { cart, addToCart } = useCart();
+  const { cart, clearCart, removeFromCart } = useCart();
   // cart => map
 
   // const total = cart.reduce((prev, item) => prev + item.price * item.qty, 0);
@@ -30,26 +31,42 @@ function CartPage() {
     return cart.reduce((prev, item) => prev + item.price * item.qty, 0);
   }, [cart]); // depend on what ?
 
-  return (
-    <Container className="my-5 w-75">
-      {" "}
-      <Stack gap={3}>
-        {cart.map(function (product, arg2, arg3) {
-          // current item -> arg / item / product / ahmed <- 1st arg
-          // index in the array -> door / idx / index / mahmoud <- 2nd arg
-          // --> shape ->[black-box]--> <SHAPE />
-          // return
+  const checkoutHandler = () => {
+    toast.success("Checkout Done!");
+    clearCart();
+  };
 
-          // arg2 ===> index
+  return (
+    <Container className="my-5 d-flex flex-column gap-3 w-75">
+      {cart.length > 0 && (
+        <Button variant="danger" onClick={clearCart}>
+          Clear Cart
+        </Button>
+      )}
+      <Stack gap={3}>
+        {cart.map(function (product) {
           return (
-            <Card key={arg2}>
-              <Card.Body>
-                {product.name} -{product.price}EGP x{product.qty}
+            <Card key={product.id}>
+              <Card.Body className="d-flex flex-row align-items-center">
+                {product.name}{" "}
+                <b className="text-primary px-1">{product.price}EGP</b> x
+                {product.qty}
+                <Button
+                  size="sm"
+                  variant="danger"
+                  className="ms-auto"
+                  onClick={() => {
+                    removeFromCart(product);
+                  }}
+                >
+                  Remove
+                </Button>
               </Card.Body>
             </Card>
           );
         })}
-        <b>{total} EGP</b>
+        <hr />
+        {cart.length > 0 && <b>{total} EGP</b>}
       </Stack>{" "}
       <br />
       <Stack direction="vertical" gap={3}>
@@ -61,6 +78,7 @@ function CartPage() {
               type="radio"
               variant={idx % 2 ? "outline-success" : "outline-danger"}
               name="radio"
+              disabled={cart.length === 0}
               value={radio.value}
               checked={radioValue === radio.value}
               onChange={(e) => setRadioValue(e.currentTarget.value)}
@@ -70,7 +88,9 @@ function CartPage() {
           ))}
         </ButtonGroup>
         {user ? (
-          <Button disabled={total === 0}>Checkout</Button>
+          <Button disabled={cart.length === 0} onClick={checkoutHandler}>
+            Checkout
+          </Button>
         ) : (
           <Button variant="warning" as={Link} to="/login">
             Login to proceed

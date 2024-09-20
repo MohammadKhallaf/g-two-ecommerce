@@ -10,6 +10,11 @@ function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(data));
   };
 
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
   useEffect(() => {
     const localUser = localStorage.getItem("user");
     if (localUser) {
@@ -17,7 +22,7 @@ function AuthProvider({ children }) {
     }
   }, []);
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
