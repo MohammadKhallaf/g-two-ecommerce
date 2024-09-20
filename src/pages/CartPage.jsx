@@ -1,13 +1,13 @@
+import { useMemo, useState } from "react";
+import { Button } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ToggleButton from "react-bootstrap/ToggleButton";
+import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
-import Card from "react-bootstrap/Card";
-import { useContext, useMemo, useState } from "react";
-import { CartContext } from "../CartContext";
-import { Button } from "react-bootstrap";
-import { useAuth } from "../store/AuthContext";
+import ToggleButton from "react-bootstrap/ToggleButton";
 import { Link } from "react-router-dom";
+import { useAuth } from "../store/AuthContext";
+import { useCart } from "../store/CartContext";
 
 const radios = [
   { name: "Cash", value: "1" },
@@ -22,7 +22,7 @@ const radios = [
 function CartPage() {
   const [radioValue, setRadioValue] = useState("1");
   const { user, login } = useAuth();
-  const { cart, addToCart } = useContext(CartContext);
+  const { cart, addToCart } = useCart();
   // cart => map
 
   // const total = cart.reduce((prev, item) => prev + item.price * item.qty, 0);

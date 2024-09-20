@@ -1,12 +1,13 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
+import { Stack } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { CartContext } from "../CartContext";
-import { Stack } from "react-bootstrap";
+import { useCart } from "../store/CartContext";
+import { useWishlist } from "../store/WishlistContext";
 
 function ProductCard({ product }) {
-  const { cart, wishlist, addToCart, addToWishlist, removeFromWishlist } =
-    useContext(CartContext);
+  const { addToCart } = useCart();
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
 
   const index = wishlist.findIndex((item) => {
     return item.id === product.id;
